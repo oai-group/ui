@@ -23,7 +23,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 6,
-  "iteration": 1641200319387,
+  "iteration": 1641204819185,
   "links": [],
   "panels": [
     {
@@ -1408,7 +1408,7 @@
           "value": "172.16.0.2"
         },
         "datasource": "MySQL",
-        "definition": "SELECT DISTINCT INET_NTOA(srcIP) FROM `measure`",
+        "definition": "SELECT DISTINCT INET_NTOA(srcIP) \nFROM `measure`",
         "description": null,
         "error": null,
         "hide": 2,
@@ -1417,7 +1417,7 @@
         "multi": false,
         "name": "srcIP",
         "options": [],
-        "query": "SELECT DISTINCT INET_NTOA(srcIP) FROM `measure`",
+        "query": "SELECT DISTINCT INET_NTOA(srcIP) \nFROM `measure`",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1432,7 +1432,7 @@
           "value": "7788"
         },
         "datasource": "MySQL",
-        "definition": "SELECT DISTINCT srcPort FROM `measure`",
+        "definition": "SELECT DISTINCT srcPort \nFROM `measure`\nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL')",
         "description": null,
         "error": null,
         "hide": 2,
@@ -1441,7 +1441,7 @@
         "multi": false,
         "name": "srcPort",
         "options": [],
-        "query": "SELECT DISTINCT srcPort FROM `measure`",
+        "query": "SELECT DISTINCT srcPort \nFROM `measure`\nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL')",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1456,7 +1456,7 @@
           "value": "172.16.0.4"
         },
         "datasource": "MySQL",
-        "definition": "SELECT DISTINCT INET_NTOA(dstIP) FROM `measure`",
+        "definition": "SELECT DISTINCT INET_NTOA(dstIP) \nFROM `measure`\nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(srcPort = '$srcPort' OR '$srcPort' = 'NULL')",
         "description": null,
         "error": null,
         "hide": 2,
@@ -1465,7 +1465,7 @@
         "multi": false,
         "name": "dstIP",
         "options": [],
-        "query": "SELECT DISTINCT INET_NTOA(dstIP) FROM `measure`",
+        "query": "SELECT DISTINCT INET_NTOA(dstIP) \nFROM `measure`\nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(srcPort = '$srcPort' OR '$srcPort' = 'NULL')",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1480,7 +1480,7 @@
           "value": "9998"
         },
         "datasource": "MySQL",
-        "definition": "SELECT DISTINCT dstPort FROM `measure`",
+        "definition": "SELECT DISTINCT dstPort \nFROM `measure`\nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n(srcPort = '$srcPort' OR '$srcPort' = 'NULL')",
         "description": null,
         "error": null,
         "hide": 2,
@@ -1489,7 +1489,7 @@
         "multi": false,
         "name": "dstPort",
         "options": [],
-        "query": "SELECT DISTINCT dstPort FROM `measure`",
+        "query": "SELECT DISTINCT dstPort \nFROM `measure`\nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n(srcPort = '$srcPort' OR '$srcPort' = 'NULL')",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1504,7 +1504,7 @@
           "value": "17"
         },
         "datasource": "MySQL",
-        "definition": "SELECT DISTINCT protocol FROM `measure`",
+        "definition": "SELECT DISTINCT protocol \nFROM `measure`\nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n(srcPort = '$srcPort' OR '$srcPort' = 'NULL') AND\n(dstPort = '$dstPort' OR '$dstPort' = 'NULL')",
         "description": null,
         "error": null,
         "hide": 2,
@@ -1513,7 +1513,7 @@
         "multi": false,
         "name": "protocol",
         "options": [],
-        "query": "SELECT DISTINCT protocol FROM `measure`",
+        "query": "SELECT DISTINCT protocol \nFROM `measure`\nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n(srcPort = '$srcPort' OR '$srcPort' = 'NULL') AND\n(dstPort = '$dstPort' OR '$dstPort' = 'NULL')",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1528,7 +1528,7 @@
           "value": "172.16.0.2 : 7788->172.16.0.4 : 9998 协议号 17"
         },
         "datasource": "MySQL",
-        "definition": "SELECT CONCAT(INET_NTOA(srcIP),' : ',srcPort,'->',INET_NTOA(dstIP),' : ',dstPort,' 协议号 ',protocol) \nFROM `measure` \nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n(srcPort = $srcPort OR '$srcPort' = 'NULL') AND\n(dstPort = $dstPort OR '$dstPort' = 'NULL') AND\n(protocol = $protocol OR '$protocol' = 'NULL') ",
+        "definition": "SELECT CONCAT(INET_NTOA(srcIP),' : ',srcPort,'->',INET_NTOA(dstIP),' : ',dstPort,' 协议号 ',protocol) \nFROM `measure` \nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n(srcPort = '$srcPort' OR '$srcPort' = 'NULL') AND\n(dstPort = '$dstPort' OR '$dstPort' = 'NULL') AND\n(protocol = '$protocol' OR '$protocol' = 'NULL') ",
         "description": null,
         "error": null,
         "hide": 2,
@@ -1537,7 +1537,7 @@
         "multi": false,
         "name": "flow",
         "options": [],
-        "query": "SELECT CONCAT(INET_NTOA(srcIP),' : ',srcPort,'->',INET_NTOA(dstIP),' : ',dstPort,' 协议号 ',protocol) \nFROM `measure` \nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n(srcPort = $srcPort OR '$srcPort' = 'NULL') AND\n(dstPort = $dstPort OR '$dstPort' = 'NULL') AND\n(protocol = $protocol OR '$protocol' = 'NULL') ",
+        "query": "SELECT CONCAT(INET_NTOA(srcIP),' : ',srcPort,'->',INET_NTOA(dstIP),' : ',dstPort,' 协议号 ',protocol) \nFROM `measure` \nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n(srcPort = '$srcPort' OR '$srcPort' = 'NULL') AND\n(dstPort = '$dstPort' OR '$dstPort' = 'NULL') AND\n(protocol = '$protocol' OR '$protocol' = 'NULL') ",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1569,5 +1569,5 @@
   "timezone": "",
   "title": "OAI-UI",
   "uid": "Bbu1WdA7z",
-  "version": 38
+  "version": 42
 }
