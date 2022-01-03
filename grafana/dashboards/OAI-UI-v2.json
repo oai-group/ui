@@ -23,7 +23,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 6,
-  "iteration": 1640937939574,
+  "iteration": 1641200319387,
   "links": [],
   "panels": [
     {
@@ -609,8 +609,8 @@
             }
           ],
           "metricColumn": "none",
-          "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(data_time_date,1s),\n  avg(delay) AS \"$flow\"\nFROM delayloss\nWHERE\n  $__timeFilter(data_time_date) AND\n  INET_NTOA(srcIP) = '$srcIP' AND\n  INET_NTOA(dstIP) = '$dstIP' AND\n  srcPort = $srcPort AND\n  dstPort = $dstPort AND\n  protocol = $protocol\nGROUP BY 1\nORDER BY $__timeGroup(data_time_date,1s)",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(data_time_date,1s),\n  CONCAT(INET_NTOA(srcIP),' : ',srcPort,'->',INET_NTOA(dstIP),' : ',dstPort) AS metric,\n  avg(delay)\nFROM delayloss\nWHERE\n  $__timeFilter(data_time_date) AND\n  (INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n  (INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n  (srcPort = '$srcPort' OR '$srcPort' = 'NULL') AND\n  (dstPort = '$dstPort' OR '$dstPort' = 'NULL') AND\n  (protocol = '$protocol' OR '$protocol' = 'NULL')\nGROUP BY 1,2\nORDER BY $__timeGroup(data_time_date,1s)",
           "refId": "A",
           "select": [
             [
@@ -785,8 +785,8 @@
             }
           ],
           "metricColumn": "none",
-          "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(data_time_date,1s),\n  avg(loss) AS \"$flow\"\nFROM delayloss\nWHERE\n  $__timeFilter(data_time_date) AND\n  INET_NTOA(srcIP) = '$srcIP' AND\n  INET_NTOA(dstIP) = '$dstIP' AND\n  srcPort = $srcPort AND\n  dstPort = $dstPort AND\n  protocol = $protocol\nGROUP BY 1\nORDER BY $__timeGroup(data_time_date,1s)",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(data_time_date,1s),\n  CONCAT(INET_NTOA(srcIP),' : ',srcPort,'->',INET_NTOA(dstIP),' : ',dstPort) AS metric,\n  avg(loss)\nFROM delayloss\nWHERE\n  $__timeFilter(data_time_date) AND\n  (INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n  (INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n  (srcPort = '$srcPort' OR '$srcPort' = 'NULL') AND\n  (dstPort = '$dstPort' OR '$dstPort' = 'NULL') AND\n  (protocol = '$protocol' OR '$protocol' = 'NULL') \nGROUP BY 1,2\nORDER BY $__timeGroup(data_time_date,1s)",
           "refId": "A",
           "select": [
             [
@@ -916,7 +916,7 @@
               },
               {
                 "id": "custom.filterable",
-                "value": false
+                "value": true
               },
               {
                 "id": "color",
@@ -928,15 +928,6 @@
               {
                 "id": "displayName",
                 "value": "源IP"
-              },
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "title": "时延和丢包率信息",
-                    "url": "http://192.168.1.106:3000/d/Bbu1WdA7z/oai-ui?orgId=1&var-srcIP=${__data.fields.INET_NTOA(srcIP)}﻿﻿&var-srcPort=﻿﻿${__data.fields.srcPort}﻿﻿&var-dstIP=﻿﻿${__data.fields.INET_NTOA(dstIP)}﻿﻿&var-dstPort=${__data.fields.dstPort}&${protocol:queryparam}&from=now-5m&to=now"
-                  }
-                ]
               }
             ]
           },
@@ -951,7 +942,8 @@
                 "value": "color-text"
               },
               {
-                "id": "custom.filterable"
+                "id": "custom.filterable",
+                "value": true
               },
               {
                 "id": "color",
@@ -977,7 +969,8 @@
                 "value": "color-text"
               },
               {
-                "id": "custom.filterable"
+                "id": "custom.filterable",
+                "value": true
               },
               {
                 "id": "color",
@@ -1003,7 +996,8 @@
                 "value": "color-text"
               },
               {
-                "id": "custom.filterable"
+                "id": "custom.filterable",
+                "value": true
               },
               {
                 "id": "color",
@@ -1041,6 +1035,15 @@
               {
                 "id": "displayName",
                 "value": "源地址"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "过滤源IP",
+                    "url": "http://192.168.1.106:3000/d/Bbu1WdA7z/oai-ui?orgId=1&var-srcIP=${__data.fields.INET_NTOA(srcIP)}&var-srcPort=NULL﻿﻿﻿﻿&var-dstIP=﻿﻿NULL﻿﻿&var-dstPort=NULL﻿﻿&var-protocol=NULL﻿﻿&from=now-5m&to=now"
+                  }
+                ]
               }
             ]
           },
@@ -1067,6 +1070,15 @@
               {
                 "id": "displayName",
                 "value": "目的地址"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "过滤目的IP",
+                    "url": "http://192.168.1.106:3000/d/Bbu1WdA7z/oai-ui?orgId=1&var-srcIP=NULL﻿﻿&var-srcPort=NULL﻿﻿﻿﻿&var-dstIP=﻿﻿${__data.fields.INET_NTOA(dstIP)}﻿﻿&var-dstPort=NULL﻿﻿&var-protocol=NULL﻿﻿&from=now-5m&to=now"
+                  }
+                ]
               }
             ]
           },
@@ -1243,6 +1255,42 @@
                 "value": "业务类型"
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "metric"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "时延和丢包率信息",
+                    "url": "http://192.168.1.106:3000/d/Bbu1WdA7z/oai-ui?orgId=1&var-srcIP=${__data.fields.INET_NTOA(srcIP)}﻿﻿&var-srcPort=﻿﻿${__data.fields.srcPort}﻿﻿&var-dstIP=﻿﻿${__data.fields.INET_NTOA(dstIP)}﻿﻿&var-dstPort=${__data.fields.dstPort}&var-protocol=${__data.fields.protocol.numeric}&from=now-5m&to=now"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 280
+              },
+              {
+                "id": "displayName",
+                "value": "业务流"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
           }
         ]
       },
@@ -1264,7 +1312,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  INET_NTOA(srcIP),\n  srcPort,\n  INET_NTOA(dstIP),\n  dstPort,\n  CONCAT(INET_NTOA(srcIP),' : ',srcPort),\n  CONCAT(INET_NTOA(dstIP),' : ',dstPort),\n  protocol,\n  averBytes,\n  averPkts,\n  flowType\nFROM measure",
+          "rawSql": "SELECT\n  CONCAT(INET_NTOA(srcIP),' : ',srcPort,'->',INET_NTOA(dstIP),' : ',dstPort) AS metric,\n  INET_NTOA(srcIP),\n  srcPort,\n  INET_NTOA(dstIP),\n  dstPort,\n  CONCAT(INET_NTOA(srcIP),' : ',srcPort),\n  CONCAT(INET_NTOA(dstIP),' : ',dstPort),\n  protocol,\n  averBytes,\n  averPkts,\n  flowType\nFROM measure",
           "refId": "A",
           "select": [
             [
@@ -1329,8 +1377,20 @@
           "where": []
         }
       ],
-      "title": "流量识别",
-      "transformations": [],
+      "title": "业务流统计结果",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "CONCAT(INET_NTOA(dstIP),' : ',dstPort)": true,
+              "CONCAT(INET_NTOA(srcIP),' : ',srcPort)": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
       "type": "table"
     }
   ],
@@ -1348,16 +1408,16 @@
           "value": "172.16.0.2"
         },
         "datasource": "MySQL",
-        "definition": "select INET_NTOA(srcIP) from `measure`",
+        "definition": "SELECT DISTINCT INET_NTOA(srcIP) FROM `measure`",
         "description": null,
         "error": null,
-        "hide": 0,
+        "hide": 2,
         "includeAll": false,
         "label": "源IP",
         "multi": false,
         "name": "srcIP",
         "options": [],
-        "query": "select INET_NTOA(srcIP) from `measure`",
+        "query": "SELECT DISTINCT INET_NTOA(srcIP) FROM `measure`",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1372,16 +1432,16 @@
           "value": "7788"
         },
         "datasource": "MySQL",
-        "definition": "select srcPort from `measure` where INET_NTOA(srcIP)='$srcIP'",
+        "definition": "SELECT DISTINCT srcPort FROM `measure`",
         "description": null,
         "error": null,
-        "hide": 0,
+        "hide": 2,
         "includeAll": false,
         "label": "源端口",
         "multi": false,
         "name": "srcPort",
         "options": [],
-        "query": "select srcPort from `measure` where INET_NTOA(srcIP)='$srcIP'",
+        "query": "SELECT DISTINCT srcPort FROM `measure`",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1396,16 +1456,16 @@
           "value": "172.16.0.4"
         },
         "datasource": "MySQL",
-        "definition": "select INET_NTOA(dstIP) from `measure` where INET_NTOA(srcIP)='$srcIP' and srcPort=$srcPort",
+        "definition": "SELECT DISTINCT INET_NTOA(dstIP) FROM `measure`",
         "description": null,
         "error": null,
-        "hide": 0,
+        "hide": 2,
         "includeAll": false,
         "label": "目的IP",
         "multi": false,
         "name": "dstIP",
         "options": [],
-        "query": "select INET_NTOA(dstIP) from `measure` where INET_NTOA(srcIP)='$srcIP' and srcPort=$srcPort",
+        "query": "SELECT DISTINCT INET_NTOA(dstIP) FROM `measure`",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1420,16 +1480,16 @@
           "value": "9998"
         },
         "datasource": "MySQL",
-        "definition": "select dstPort from `measure` where INET_NTOA(srcIP)='$srcIP' and srcPort=$srcPort and INET_NTOA(dstIP)='$dstIP' ",
+        "definition": "SELECT DISTINCT dstPort FROM `measure`",
         "description": null,
         "error": null,
-        "hide": 0,
+        "hide": 2,
         "includeAll": false,
         "label": "目的端口",
         "multi": false,
         "name": "dstPort",
         "options": [],
-        "query": "select dstPort from `measure` where INET_NTOA(srcIP)='$srcIP' and srcPort=$srcPort and INET_NTOA(dstIP)='$dstIP' ",
+        "query": "SELECT DISTINCT dstPort FROM `measure`",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1444,16 +1504,16 @@
           "value": "17"
         },
         "datasource": "MySQL",
-        "definition": "select protocol from `measure` where INET_NTOA(srcIP)='$srcIP' and srcPort=$srcPort and INET_NTOA(dstIP)='$dstIP' and dstPort=$dstPort",
+        "definition": "SELECT DISTINCT protocol FROM `measure`",
         "description": null,
         "error": null,
-        "hide": 0,
+        "hide": 2,
         "includeAll": false,
         "label": "协议号",
         "multi": false,
         "name": "protocol",
         "options": [],
-        "query": "select protocol from `measure` where INET_NTOA(srcIP)='$srcIP' and srcPort=$srcPort and INET_NTOA(dstIP)='$dstIP' and dstPort=$dstPort",
+        "query": "SELECT DISTINCT protocol FROM `measure`",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1468,16 +1528,16 @@
           "value": "172.16.0.2 : 7788->172.16.0.4 : 9998 协议号 17"
         },
         "datasource": "MySQL",
-        "definition": "select CONCAT(INET_NTOA(srcIP),' : ',srcPort,'->',INET_NTOA(dstIP),' : ',dstPort,' 协议号 ',protocol) from `measure` where INET_NTOA(srcIP)='$srcIP' and srcPort=$srcPort and INET_NTOA(dstIP)='$dstIP' and dstPort=$dstPort and protocol=$protocol",
+        "definition": "SELECT CONCAT(INET_NTOA(srcIP),' : ',srcPort,'->',INET_NTOA(dstIP),' : ',dstPort,' 协议号 ',protocol) \nFROM `measure` \nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n(srcPort = $srcPort OR '$srcPort' = 'NULL') AND\n(dstPort = $dstPort OR '$dstPort' = 'NULL') AND\n(protocol = $protocol OR '$protocol' = 'NULL') ",
         "description": null,
         "error": null,
-        "hide": 0,
+        "hide": 2,
         "includeAll": false,
         "label": "业务流",
         "multi": false,
         "name": "flow",
         "options": [],
-        "query": "select CONCAT(INET_NTOA(srcIP),' : ',srcPort,'->',INET_NTOA(dstIP),' : ',dstPort,' 协议号 ',protocol) from `measure` where INET_NTOA(srcIP)='$srcIP' and srcPort=$srcPort and INET_NTOA(dstIP)='$dstIP' and dstPort=$dstPort and protocol=$protocol",
+        "query": "SELECT CONCAT(INET_NTOA(srcIP),' : ',srcPort,'->',INET_NTOA(dstIP),' : ',dstPort,' 协议号 ',protocol) \nFROM `measure` \nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n(srcPort = $srcPort OR '$srcPort' = 'NULL') AND\n(dstPort = $dstPort OR '$dstPort' = 'NULL') AND\n(protocol = $protocol OR '$protocol' = 'NULL') ",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1509,5 +1569,5 @@
   "timezone": "",
   "title": "OAI-UI",
   "uid": "Bbu1WdA7z",
-  "version": 20
+  "version": 38
 }
