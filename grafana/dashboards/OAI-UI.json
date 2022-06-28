@@ -22,8 +22,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
-  "iteration": 1656393555304,
+  "iteration": 1656394131729,
   "links": [],
   "panels": [
     {
@@ -5898,16 +5897,15 @@
       {
         "allValue": null,
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": "172.16.0.2",
-          "value": "172.16.0.2"
+          "text": "None",
+          "value": ""
         },
-        "datasource": "MySQL",
+        "datasource": null,
         "definition": "SELECT DISTINCT INET_NTOA(srcIP) \nFROM `measure`",
         "description": null,
-        "error": {
-          "message": "Datasource named MySQL was not found"
-        },
+        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "源IP",
@@ -5924,16 +5922,15 @@
       {
         "allValue": null,
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": "7788",
-          "value": "7788"
+          "text": "None",
+          "value": ""
         },
-        "datasource": "MySQL",
+        "datasource": null,
         "definition": "SELECT DISTINCT srcPort \nFROM `measure`\nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL')",
         "description": null,
-        "error": {
-          "message": "Datasource named MySQL was not found"
-        },
+        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "源端口",
@@ -5950,16 +5947,15 @@
       {
         "allValue": null,
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": "172.16.0.4",
-          "value": "172.16.0.4"
+          "text": "None",
+          "value": ""
         },
-        "datasource": "MySQL",
+        "datasource": null,
         "definition": "SELECT DISTINCT INET_NTOA(dstIP) \nFROM `measure`\nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(srcPort = '$srcPort' OR '$srcPort' = 'NULL')",
         "description": null,
-        "error": {
-          "message": "Datasource named MySQL was not found"
-        },
+        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "目的IP",
@@ -5976,16 +5972,15 @@
       {
         "allValue": null,
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": "9998",
-          "value": "9998"
+          "text": "None",
+          "value": ""
         },
-        "datasource": "MySQL",
+        "datasource": null,
         "definition": "SELECT DISTINCT dstPort \nFROM `measure`\nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n(srcPort = '$srcPort' OR '$srcPort' = 'NULL')",
         "description": null,
-        "error": {
-          "message": "Datasource named MySQL was not found"
-        },
+        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "目的端口",
@@ -6002,16 +5997,15 @@
       {
         "allValue": null,
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": "17",
-          "value": "17"
+          "text": "None",
+          "value": ""
         },
-        "datasource": "MySQL",
+        "datasource": null,
         "definition": "SELECT DISTINCT protocol \nFROM `measure`\nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n(srcPort = '$srcPort' OR '$srcPort' = 'NULL') AND\n(dstPort = '$dstPort' OR '$dstPort' = 'NULL')",
         "description": null,
-        "error": {
-          "message": "Datasource named MySQL was not found"
-        },
+        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "协议号",
@@ -6028,16 +6022,15 @@
       {
         "allValue": null,
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": "172.16.0.2 : 7788->172.16.0.4 : 9998 协议号 17",
-          "value": "172.16.0.2 : 7788->172.16.0.4 : 9998 协议号 17"
+          "text": "None",
+          "value": ""
         },
-        "datasource": "MySQL",
+        "datasource": null,
         "definition": "SELECT CONCAT(INET_NTOA(srcIP),' : ',srcPort,'->',INET_NTOA(dstIP),' : ',dstPort,' 协议号 ',protocol) \nFROM `measure` \nWHERE\n(INET_NTOA(srcIP) = '$srcIP' OR '$srcIP' = 'NULL') AND\n(INET_NTOA(dstIP) = '$dstIP' OR '$dstIP' = 'NULL') AND\n(srcPort = '$srcPort' OR '$srcPort' = 'NULL') AND\n(dstPort = '$dstPort' OR '$dstPort' = 'NULL') AND\n(protocol = '$protocol' OR '$protocol' = 'NULL') ",
         "description": null,
-        "error": {
-          "message": "Datasource named MySQL was not found"
-        },
+        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "业务流",
@@ -6076,5 +6069,5 @@
   "timezone": "",
   "title": "OAI-UI",
   "uid": "Bbu1WdA7Z",
-  "version": 3
+  "version": 1
 }
